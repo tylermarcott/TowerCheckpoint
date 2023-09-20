@@ -6,5 +6,8 @@ export const AppState = reactive({
   /** @type {import('./models/Account.js').Account} */
   account: {},
   /**@type {Event[]} */
-  events: []
+  events: [],
+
+  /**@type {Event} */
+  activeEvent: null
 })

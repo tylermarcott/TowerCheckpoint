@@ -1,11 +1,11 @@
 <template>
-  <header>
+  <header class="secondary-background">
     <Navbar />
   </header>
-  <main>
+  <main class="background">
     <router-view />
   </main>
-   <footer class="bg-primary text-light">
+   <footer class="secondary-background text-light">
     Come to us for all of your event needs!
   </footer>
 </template>
@@ -29,6 +29,14 @@ export default {
 
 :root{
   --main-height: calc(100vh - 32px - 64px);
+}
+
+.background{
+  background-color: #6d6b94;
+}
+
+.secondary-background{
+background-color: #92946B;
 }
 
 

@@ -1,10 +1,11 @@
 <template>
 
 <router-link :to="{path: `events/${event.id}`}">
-        <div class="elevation-3 rounded event-card">
+        <div class="elevation-3 desc-card">
           <img class="img" :src="event.coverImg" :alt="event.name">
-          <div class="text-center">
+          <div class="text-center desc-card">
             <h5>{{ event.name }}</h5>
+            <div>Ticket left: {{ event.capacity - event.ticketCount }}</div>
           </div>
         </div>
 </router-link>
@@ -31,13 +32,14 @@ setup() {
     object-fit: cover;
     object-position: center;
     max-height: 50vh;
-    max-width: 100%
+    max-width: 100%;
+    border-radius: 5px;
 }
 
 .desc-card{
-  background-color: #3f3c3c;
+  background-color: #f9f6f6a6;
   backdrop-filter: blur;
-  border-radius: 14px;
+  border-radius: 5px;
 }
 
 

@@ -1,4 +1,9 @@
 <template>
+
+  <section class="container">
+    
+  </section>
+
   <section class="container">
     <div class="row">
       <div v-for="event in events" :key="event.id" class="col-6 g-3">

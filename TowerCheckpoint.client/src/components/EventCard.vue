@@ -1,10 +1,13 @@
 <template>
-    <div class="elevation-3 rounded event-card">
-      <img class="img" :src="event.coverImg" :alt="event.name">
-      <div class="text-center">
-        <h5>{{ event.name }}</h5>
-      </div>
-    </div>
+
+<router-link :to="{path: `events/${event.id}`}">
+        <div class="elevation-3 rounded event-card">
+          <img class="img" :src="event.coverImg" :alt="event.name">
+          <div class="text-center">
+            <h5>{{ event.name }}</h5>
+          </div>
+        </div>
+</router-link>
 </template>
 
 <script>

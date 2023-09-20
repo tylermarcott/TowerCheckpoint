@@ -1,12 +1,30 @@
 <template>
 
+<!-- TODO: put a button for each venue type, plus an all button -->
   <section class="container">
-    
+<div class="row justify-content-center mt-3">
+  <div class="col-2 text-center">
+    <button class="btn btn-dark">All</button>
+  </div>
+  <div class="col-2 text-center">
+    <button class="btn btn-dark">Concert</button>
+  </div>
+    <div class="col-2 text-center">
+    <button class="btn btn-dark">Convention</button>
+  </div>
+    <div class="col-2 text-center">
+    <button class="btn btn-dark">Sport</button>
+  </div>
+    <div class="col-2 text-center">
+    <button class="btn btn-dark">Digital</button>
+  </div>
+</div>
+
   </section>
 
   <section class="container">
     <div class="row">
-      <div v-for="event in events" :key="event.id" class="col-6 g-3">
+      <div v-for="event in events" :key="event.id" class="col-12 col-md-6 g-3">
         <EventCard :event="event"/>
       </div>
     </div>

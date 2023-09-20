@@ -1,6 +1,14 @@
+
+
+<!-- FIXME: getting some random errors on this page, make sure to come back and figure them out -->
+
+
+
+
+
 <template>
 <section class="container">
-  <div class="row justify-content-center">
+  <div class="row justify-content-center mb-5">
     <div class="col-8 d-flex justify-content-center elevation-2 bg-light">
       <img class="img" :src="event.coverImg" :alt="event.name">
     </div>

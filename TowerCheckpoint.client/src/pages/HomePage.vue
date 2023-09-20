@@ -52,7 +52,13 @@ export default {
     }
     return {
       filterBy,
-      events: computed(()=> AppState.events)
+      events: computed(()=> {
+        if(!filterBy.value){
+          return AppState.events
+        } else{
+          return AppState.events.filter(event => event.type == filterBy.value)
+        }
+      })
     }
   },
   component: {EventCard}

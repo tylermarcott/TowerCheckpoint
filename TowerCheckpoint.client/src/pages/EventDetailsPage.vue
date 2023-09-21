@@ -14,7 +14,7 @@
         <h3>{{ event?.name }}</h3>
       </div>
       <div class="row text-center m-2">
-        <h5>{{ event?.location }}</h5>
+        <h5>{{ event?.location }}, {{ event?.startDate }}</h5>
       </div>
       <div class="row text-center m-2">
         <p>{{ event?.description }}</p>
@@ -66,6 +66,8 @@ setup() {
     event: computed(()=> AppState.activeEvent),
     user: computed(()=> AppState.user),
     account: computed(()=> AppState.account),
+
+    // TODO: have to change the raw data dump time to a specified time
 
     async cancelEvent(){
       try {

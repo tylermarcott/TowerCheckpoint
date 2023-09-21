@@ -4,6 +4,7 @@ import { eventsService } from "../services/EventsService.js";
 import { logger } from "../utils/Logger.js";
 import { BadRequest } from "../utils/Errors.js";
 import { ticketsService } from "../services/TicketsService.js";
+import { commentsService } from "../services/CommentsService.js";
 
 
 export class EventsController extends BaseController {
@@ -14,6 +15,7 @@ export class EventsController extends BaseController {
       .get('', this.getEvents)
       .get('/:eventId', this.getEventById)
       .get('/:eventId/tickets', this.getEventTicketPurchasers)
+      .get('/:eventId/comments', this.getCommentsByEvent)
       .use(Auth0Provider.getAuthorizedUserInfo)
       .post('', this.createEvent)
       .put('/:eventId', this.editEvent)
@@ -42,6 +44,15 @@ export class EventsController extends BaseController {
     try {
       const purchasers = await ticketsService.getEventTicketPurchaser(req.params.eventId)
       res.send(purchasers)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async getCommentsByEvent(req, res, next) {
+    try {
+      const comment = await commentsService.getCommentsByEvent(req.params.eventId)
+      res.send(comment)
     } catch (error) {
       next(error)
     }

@@ -15,6 +15,7 @@ export class TicketsController extends BaseController {
   async createTicket(req, res, next) {
     try {
       const ticketBody = req.body
+      ticketBody.accountId = req.userInfo.id //NOTE: make sure to attach the account id to the request body, because we need to make sure that the automatically populated account id is appended to the body, not entered by the creator
       const ticket = await ticketsService.createTicket(ticketBody)
       res.send(ticket)
     } catch (error) {

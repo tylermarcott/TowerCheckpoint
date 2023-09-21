@@ -18,7 +18,7 @@
         <select v-model="eventData.type" class="form-control" id="event-type" required="true">
           <option value="concert">concert</option>
           <option value="convention">convention</option>
-          <option value="sports">sports</option>
+          <option value="sport">sport</option>
           <option value="digital">digital</option>
         </select>
       </div>

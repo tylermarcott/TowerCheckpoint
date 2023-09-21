@@ -9,7 +9,7 @@ export const EventSchema = new Schema({
   location: { type: String, required: true, maxLength: 50 },
   capacity: { type: Number, required: true, minLength: 10, maxLength: 20000 },
   startDate: { type: Date },
-  type: { type: String, required: true, maxLength: 50, enum: ['convention', 'sports', 'digital', 'concert'], lowercase: true },
+  type: { type: String, required: true, maxLength: 50, enum: ['convention', 'sport', 'digital', 'concert'], lowercase: true },
   creatorId: { type: Schema.Types.ObjectId, ref: 'Account', required: true },
   isCanceled: { type: Boolean, required: true, default: false }
 }, { toJSON: { virtuals: true } })

@@ -20,3 +20,6 @@ TicketSchema.virtual('event', {
   ref: 'Event',
   justOne: true
 })
+
+
+

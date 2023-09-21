@@ -4,7 +4,8 @@
   <div class="row justify-content-center mb-5">
     <div class="col-8 d-flex justify-content-center elevation-2 bg-light">
       <!-- NOTE: do not forget to use the elvis operator OR a v-if statement to compensate for conditions where activeEvent is null. If you don't do this, you will get errors saying can't read properties of undefined or something similar. -->
-      <img class="img" :src="event?.coverImg" :alt="event?.name">
+      <img v-if="event?.isCanceled || ((event?.capacity - event?.ticketCount) == 0)" src="https://pngimg.com/d/sold_out_PNG61.png" alt="">
+      <img v-if="!(event?.isCanceled || ((event?.capacity - event?.ticketCount) == 0))" class="img" :src="event?.coverImg" :alt="event?.name">
     </div>
   </div>
   <div class="row justify-content-center">
@@ -71,8 +72,8 @@ setup() {
 
         // TODO: come back and finish this cancel event function.
 
-        logger.log('here is our active event id:', this.id)
-        const cancelledEvent = await eventsService.cancelEvent(this.id)
+        logger.log('here is our active event id:', AppState.activeEvent.id)
+        const cancelledEvent = await eventsService.cancelEvent(AppState.activeEvent.id)
       } catch (error) {
         Pop.error(error)
       }

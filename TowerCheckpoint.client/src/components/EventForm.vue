@@ -71,11 +71,9 @@ setup() {
         logger.log('creating event with the following data:', eventData.value)
         Pop.toast('Event Created!', 'success')
         resetForm()
-        Modal.getOrCreateInstance('#create-event').hide()
-        // FIXME: issue with id here
-        router.push({name: 'Event Details', params: {eventId: newEvent.id}})
-
-        // TODO: finish more syntax here after you get your create done.
+        // FIXME: both of the lines below are broken
+        // Modal.getOrCreateInstance('#create-event').hide()
+        // router.push({name: 'Event Details', params: {eventId: newEvent.id}})
 
       } catch (error) {
         Pop.error(error)

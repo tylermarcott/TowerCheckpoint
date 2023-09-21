@@ -1,17 +1,23 @@
 <template>
 
+
+
+
+
+<!-- FIXME: still having issues where the modal does not automatically close, and it does not automatically take me to the details page -->
+
 <!-- NOTE: modal trigger button NOTE: had to remove ${} from id, it was causing an issue -->
-  <button class="btn btn-dark me-2" data-bs-toggle="modal" :data-bs-target="`#id`">
+  <button v-if="showButton" type="button" class="btn btn-dark me-2" data-bs-toggle="modal" :data-bs-target="`#createEvent`">
     <slot name="button">
-      open {{ id }} modal
+      open {{ createEvent }} modal
     </slot>
   </button>
 
-  <div class="modal fade" id="id" tabindex="-1" aria-labelledby="modalTitleId" aria-hidden="true">
+  <div class="modal fade" id="createEvent" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
-        <div class="header">
-          <slot>
+        <div class="modal-header">
+          <slot name="header">
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
           </slot>
         </div>

@@ -15,7 +15,6 @@
           </router-link>
         </li>
       </ul>
-      <!-- TODO:  clicking this button will open a modal that will be a form to create an event -->
 
       <ModalWrapper id="create-event" v-if="user.isAuthenticated">
         <template #button>

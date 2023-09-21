@@ -45,20 +45,23 @@
 
 <script>
 
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import Pop from "../utils/Pop.js";
 import { eventsService } from "../services/EventsService.js";
 import { logger } from "../utils/Logger.js";
 import { Modal } from "bootstrap";
 import { router } from "../router.js";
+import { useRouter } from "vue-router";
 
 export default {
 setup() {
   // NOTE: you have to push this into your brain. The only thing that a ref does is act as an object that is a placeholder to put the data that is submitted from our form. This data is then passed to the create to create a new event
   const eventData = ref({});
+  const router = useRouter()
   function resetForm(){
     eventData.value = {type: ''}
   }
+  
   return {
     // NOTE: remember you have to return the ref so that it can be referenced in your html
     eventData,
@@ -68,7 +71,7 @@ setup() {
         logger.log('creating event with the following data:', eventData.value)
         Pop.toast('Event Created!', 'success')
         resetForm()
-        // Modal.getOrCreateInstance('#create-event').hide()
+        Modal.getOrCreateInstance('#create-event').hide()
         // FIXME: issue with id here
         router.push({name: 'Event Details', params: {eventId: newEvent.id}})
 

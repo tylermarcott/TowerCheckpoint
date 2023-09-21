@@ -1,38 +1,34 @@
 
-
-<!-- TODO: let's work on cancelling an event next. -->
-
-
 <template>
 <section class="container">
   <div class="row justify-content-center mb-5">
     <div class="col-8 d-flex justify-content-center elevation-2 bg-light">
       <!-- NOTE: do not forget to use the elvis operator OR a v-if statement to compensate for conditions where activeEvent is null. If you don't do this, you will get errors saying can't read properties of undefined or something similar. -->
-      <img class="img" :src="event?.coverImg" :alt="event.name">
+      <img class="img" :src="event?.coverImg" :alt="event?.name">
     </div>
   </div>
   <div class="row justify-content-center">
     <div class="col-10 details-card elevation-2 bg-light">
       <div class="row text-center m-2">
-        <h3>{{ event.name }}</h3>
+        <h3>{{ event?.name }}</h3>
       </div>
       <div class="row text-center m-2">
-        <h5>{{ event.location }}</h5>
+        <h5>{{ event?.location }}</h5>
       </div>
       <div class="row text-center m-2">
-        <p>{{ event.description }}</p>
+        <p>{{ event?.description }}</p>
       </div>
       <div class="row mt-5 ms-2">
         <div class="col-6">
-          <h5>Tickets Left: {{ event.capacity - event.ticketCount }}</h5>
+          <h5>Tickets Left: {{ event?.capacity - event?.ticketCount }}</h5>
         </div>
         <div class="col-6 text-center">
           
-          <button v-if="!((event.capacity - event.ticketCount) == 0)" class="btn btn-warning">Attend</button>
+          <button v-if="!((event?.capacity - event?.ticketCount) == 0)" class="btn btn-warning">Attend</button>
 
-          <h3 class="sold-out" v-if="(event.capacity - event.ticketCount) == 0">SOLD OUT</h3>
+          <h3 class="sold-out" v-if="(event?.capacity - event?.ticketCount) == 0">SOLD OUT</h3>
 
-          <button @click="cancelEvent" class="btn btn-danger" v-if="event.creatorId == account.id">Cancel Event</button>
+          <button @click="cancelEvent" class="btn btn-danger" v-if="event?.creatorId == account.id">Cancel Event</button>
         </div>
       </div>
     </div>

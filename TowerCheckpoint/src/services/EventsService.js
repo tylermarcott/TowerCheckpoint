@@ -23,7 +23,7 @@ class EventsService {
     return event
   }
 
-  async editEvent(updates, eventId) {
+  async editEvent(updates, eventId, userId) {
     const originalEvent = await dbContext.Event.findById(eventId)
 
     if (!originalEvent) {
@@ -32,6 +32,10 @@ class EventsService {
 
     if (originalEvent.isCanceled) {
       throw new BadRequest('This event is already cancelled and cannot be further edited.')
+    }
+
+    if (userId != originalEvent.creatorId) {
+      throw new Forbidden('This is not your event to edit.')
     }
 
     originalEvent.name = updates.name || originalEvent.name

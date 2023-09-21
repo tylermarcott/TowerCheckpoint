@@ -23,6 +23,10 @@ class EventsService{
     const res = await api.post('api/events', formData)
     AppState.events.unshift(new Event(res.data))
   }
+
+  async cancelEvent(eventId){
+    
+  }
 }
 
 

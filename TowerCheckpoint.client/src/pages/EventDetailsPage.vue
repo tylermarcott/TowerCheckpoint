@@ -32,8 +32,7 @@
 
           <h3 class="sold-out" v-if="(event.capacity - event.ticketCount) == 0">SOLD OUT</h3>
 
-          <!-- TODO: have to figure out how to fix this syntax -->
-          <button class="btn btn-danger" v-if="event.creatorId == account.id">Cancel Event</button>
+          <button @click="cancelEvent" class="btn btn-danger" v-if="event.creatorId == account.id">Cancel Event</button>
         </div>
       </div>
     </div>
@@ -49,6 +48,7 @@ import Pop from "../utils/Pop.js";
 import { eventsService } from "../services/EventsService.js";
 // import { logger } from "../utils/Logger.js";
 import {AppState} from "../AppState.js"
+import { logger } from "../utils/Logger.js";
 
 export default {
 setup() {
@@ -68,7 +68,19 @@ setup() {
   return {
     event: computed(()=> AppState.activeEvent),
     user: computed(()=> AppState.user),
-    account: computed(()=> AppState.account)
+    account: computed(()=> AppState.account),
+
+    async cancelEvent(){
+      try {
+
+        // TODO: come back and finish this cancel event function.
+
+        logger.log('here is our active event id:', this.id)
+        const cancelledEvent = await eventsService.cancelEvent(this.id)
+      } catch (error) {
+        Pop.error(error)
+      }
+    }
   };
 },
 };

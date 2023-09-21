@@ -17,6 +17,12 @@ class EventsService{
     const res = await api.get(`api/events/${eventId}`)
     AppState.activeEvent = new Event(res.data)
   }
+
+
+  async createEvent(formData){
+    const res = await api.post('api/events', formData)
+    AppState.events.unshift(new Event(res.data))
+  }
 }
 
 

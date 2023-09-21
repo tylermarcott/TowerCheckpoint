@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <form class="row" @submit="createEvent">
+    <form class="row" @submit.prevent="createEvent">
       <div class="col-12">
         <label for="event-name">Name</label>
         <input v-model="eventData.name" class="form-control" type="text" required="true" placeholder="event name" >
@@ -14,7 +14,7 @@
         <input v-model="eventData.coverImg" class="form-control" type="url" required="true" placeholder="event coverImg">
       </div>
       <div class="col-12">
-        <label for="event-type">Type</label>
+        <label for="event-category">Type</label>
         <select v-model="eventData.category" class="form-control" id="event-category" required="true">
           <option value="concert">concert</option>
           <option value="convention">convention</option>
@@ -37,6 +37,8 @@
         <input v-model="eventData.capacity" required="true" class="form-control" type="number" placeholder="event capacity">
       </div>
 
+      <button class="btn btn-dark mt-2">Submit</button>
+
     </form>
   </div>
 </template>
@@ -46,6 +48,7 @@
 import { ref } from "vue";
 import Pop from "../utils/Pop.js";
 import { eventsService } from "../services/EventsService.js";
+import { logger } from "../utils/Logger.js";
 
 export default {
 setup() {
@@ -60,6 +63,7 @@ setup() {
     async createEvent(){
       try {
         let newEvent = await eventsService.createEvent(eventData.value)
+        logger.log('creating event with the following data:', eventData.value)
         Pop.toast('Event Created!', 'success')
         resetForm()
 

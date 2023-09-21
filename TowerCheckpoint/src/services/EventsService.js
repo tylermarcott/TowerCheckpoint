@@ -34,7 +34,7 @@ class EventsService {
       throw new BadRequest('This event is already cancelled and cannot be further edited.')
     }
 
-    if (userId != originalEvent.creatorId) {
+    if (originalEvent.creatorId != userId) {
       throw new Forbidden('This is not your event to edit.')
     }
 

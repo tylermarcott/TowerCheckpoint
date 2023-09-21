@@ -35,13 +35,14 @@
 import { computed } from "vue";
 import Login from './Login.vue';
 import { AppState } from "../AppState.js";
+import ModalWrapper from './ModalWrapper.vue'
 export default {
   setup() {
     return {
       user: computed(()=> AppState.user)
     }
   },
-  components: { Login }
+  components: { Login, ModalWrapper }
 }
 </script>
 

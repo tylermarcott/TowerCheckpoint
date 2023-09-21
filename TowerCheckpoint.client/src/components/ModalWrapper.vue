@@ -31,6 +31,7 @@
 
 <script>
 export default {
+props: { id: { type: String, required: true }, showButton: { type: Boolean, default: true } },
 setup() {
   return {};
 },

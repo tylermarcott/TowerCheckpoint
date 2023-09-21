@@ -8,8 +8,10 @@ class TicketsService {
     return ticket
   }
 
-  getTicket() {
-    // const ticket = await dbContext.Ticket.
+
+  async getTicketsByAccount(userId) {
+    const ticket = await dbContext.Ticket.find({ accountId: userId }).populate({ path: 'event', populate: { path: 'create ticketCount', select: '-email' } })
+    return ticket
   }
 
 }

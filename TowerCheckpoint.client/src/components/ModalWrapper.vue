@@ -1,7 +1,7 @@
 <template>
 
-<!-- NOTE: modal trigger button -->
-  <button class="btn btn-dark me-2" data-bs-toggle="modal" :data-bs-target="`#${id}`">
+<!-- NOTE: modal trigger button NOTE: had to remove ${} from id, it was causing an issue -->
+  <button class="btn btn-dark me-2" data-bs-toggle="modal" :data-bs-target="`#id`">
     <slot name="button">
       open {{ id }} modal
     </slot>

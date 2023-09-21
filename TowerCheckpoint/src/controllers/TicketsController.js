@@ -10,6 +10,7 @@ export class TicketsController extends BaseController {
     this.router
       .use(Auth0Provider.getAuthorizedUserInfo)
       .post('', this.createTicket)
+      .delete('/:ticketId', this.removeTicket)
   }
 
   async createTicket(req, res, next) {
@@ -18,6 +19,15 @@ export class TicketsController extends BaseController {
       ticketBody.accountId = req.userInfo.id //NOTE: make sure to attach the account id to the request body, because we need to make sure that the automatically populated account id is appended to the body, not entered by the creator
       const ticket = await ticketsService.createTicket(ticketBody)
       res.send(ticket)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async removeTicket(req, res, next) {
+    try {
+      const message = await ticketsService.removeTicket(req.params.ticketId, req.userInfo.id)
+      res.send(message)
     } catch (error) {
       next(error)
     }

@@ -3,6 +3,7 @@ import BaseController from "../utils/BaseController.js";
 import { eventsService } from "../services/EventsService.js";
 import { logger } from "../utils/Logger.js";
 import { BadRequest } from "../utils/Errors.js";
+import { ticketsService } from "../services/TicketsService.js";
 
 
 export class EventsController extends BaseController {
@@ -12,6 +13,7 @@ export class EventsController extends BaseController {
 
       .get('', this.getEvents)
       .get('/:eventId', this.getEventById)
+      .get('/:eventId/tickets', this.getEventTicketPurchasers)
       .use(Auth0Provider.getAuthorizedUserInfo)
       .post('', this.createEvent)
       .put('/:eventId', this.editEvent)
@@ -31,6 +33,15 @@ export class EventsController extends BaseController {
     try {
       const event = await eventsService.getEventById(req.params.eventId)
       res.send(event)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async getEventTicketPurchasers(req, res, next) {
+    try {
+      const purchasers = await ticketsService.getEventTicketPurchaser(req.params.eventId)
+      res.send(purchasers)
     } catch (error) {
       next(error)
     }

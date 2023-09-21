@@ -17,19 +17,28 @@
       </ul>
       <!-- TODO:  clicking this button will open a modal that will be a form to create an event -->
 
-      <ModalWrapper/>
+      <ModalWrapper id="create-event" v-if="user.isAuthenticated">
+        <template #button>
+          <i class="mdi mdi-plus">Create Event</i>
+        </template>
+        <template #body>
+          <EventForm/>
+        </template>
+      </ModalWrapper>
 
-      <!-- LOGIN COMPONENT HERE -->
       <Login />
     </div>
   </nav>
 </template>
 
 <script>
+import { computed } from "vue";
 import Login from './Login.vue';
+import { AppState } from "../AppState.js";
 export default {
   setup() {
     return {
+      user: computed(()=> AppState.user)
     }
   },
   components: { Login }

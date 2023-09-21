@@ -1,10 +1,42 @@
 <template>
   <div class="container">
     <form class="row" @submit="createEvent">
-      <div>
-        <label for="event-name">Event Name</label>
-        <input v-model="eventData.name" type="text" required="true" placeholder="event name" >
+      <div class="col-12">
+        <label for="event-name">Name</label>
+        <input v-model="eventData.name" class="form-control" type="text" required="true" placeholder="event name" >
       </div>
+      <div class="col-12">
+        <label for="event-description">Description</label>
+        <input v-model="eventData.description" class="form-control" type="text" columns="3" required="true" placeholder="event description">
+      </div>
+      <div class="col-12">
+        <label for="event-coverImg">Cover Image</label>
+        <input v-model="eventData.coverImg" class="form-control" type="url" required="true" placeholder="event coverImg">
+      </div>
+      <div class="col-12">
+        <label for="event-type">Type</label>
+        <select v-model="eventData.category" class="form-control" id="event-category" required="true">
+          <option value="concert">concert</option>
+          <option value="convention">convention</option>
+          <option value="sport">sport</option>
+          <option value="digital">digital</option>
+        </select>
+      </div>
+      <div class="col-12">
+        <label for="event-location">Location</label>
+        <input v-model="eventData.location" required="true" class="form-control" type="text" placeholder="event location">
+      </div>
+
+      <div class="col-12">
+        <label for="event-startDate">Start Date</label>
+        <input v-model="eventData.startDate" required="true" class="form-control" type="date" placeholder="event startDate">
+      </div>
+
+      <div class="col-12">
+        <label for="event-capacity">Capacity</label>
+        <input v-model="eventData.capacity" required="true" class="form-control" type="number" placeholder="event capacity">
+      </div>
+
     </form>
   </div>
 </template>
@@ -12,14 +44,31 @@
 <script>
 
 import { ref } from "vue";
+import Pop from "../utils/Pop.js";
+import { eventsService } from "../services/EventsService.js";
 
 export default {
 setup() {
-  const eventData = ref({})
+  // NOTE: you have to push this into your brain. The only thing that a ref does is act as an object that is a placeholder to put the data that is submitted from our form. This data is then passed to the create to create a new event
+  const eventData = ref({});
+  function resetForm(){
+    eventData.value = {category: ''}
+  }
   return {
-
+    // NOTE: remember you have to return the ref so that it can be referenced in your html
+    eventData,
     async createEvent(){
+      try {
+        let newEvent = await eventsService.createEvent(eventData.value)
+        Pop.toast('Event Created!', 'success')
+        resetForm()
 
+
+        // TODO: finish more syntax here after you get your create done.
+
+      } catch (error) {
+        Pop.error(error)
+      }
     }
 
   };

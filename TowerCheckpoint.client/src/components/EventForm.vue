@@ -49,6 +49,8 @@ import { ref } from "vue";
 import Pop from "../utils/Pop.js";
 import { eventsService } from "../services/EventsService.js";
 import { logger } from "../utils/Logger.js";
+import { Modal } from "bootstrap";
+import { router } from "../router.js";
 
 export default {
 setup() {
@@ -66,7 +68,9 @@ setup() {
         logger.log('creating event with the following data:', eventData.value)
         Pop.toast('Event Created!', 'success')
         resetForm()
-
+        // Modal.getOrCreateInstance('#create-event').hide()
+        // FIXME: issue with id here
+        router.push({name: 'Event Details', params: {eventId: newEvent.id}})
 
         // TODO: finish more syntax here after you get your create done.
 

@@ -1,16 +1,14 @@
 
 
-<!-- FIXME: getting some random errors on this page, make sure to come back and figure them out -->
-
-
-
+<!-- TODO: let's work on cancelling an event next. -->
 
 
 <template>
 <section class="container">
   <div class="row justify-content-center mb-5">
     <div class="col-8 d-flex justify-content-center elevation-2 bg-light">
-      <img class="img" :src="event.coverImg" :alt="event.name">
+      <!-- NOTE: do not forget to use the elvis operator OR a v-if statement to compensate for conditions where activeEvent is null. If you don't do this, you will get errors saying can't read properties of undefined or something similar. -->
+      <img class="img" :src="event?.coverImg" :alt="event.name">
     </div>
   </div>
   <div class="row justify-content-center">
@@ -29,10 +27,13 @@
           <h5>Tickets Left: {{ event.capacity - event.ticketCount }}</h5>
         </div>
         <div class="col-6 text-center">
-          <!-- TODO: create syntax on this button to make it grayed out if there are no tickets left or if event is cancelled -->
-          <button class="btn btn-warning">Attend</button>
-          <!-- TODO: check and see if this sold out button works properly -->
+          
+          <button v-if="!((event.capacity - event.ticketCount) == 0)" class="btn btn-warning">Attend</button>
+
           <h3 class="sold-out" v-if="(event.capacity - event.ticketCount) == 0">SOLD OUT</h3>
+
+          <!-- TODO: have to figure out how to fix this syntax -->
+          <button class="btn btn-danger" v-if="event.creatorId == account.id">Cancel Event</button>
         </div>
       </div>
     </div>
@@ -65,7 +66,9 @@ setup() {
   }
 
   return {
-    event: computed(()=> AppState.activeEvent)
+    event: computed(()=> AppState.activeEvent),
+    user: computed(()=> AppState.user),
+    account: computed(()=> AppState.account)
   };
 },
 };

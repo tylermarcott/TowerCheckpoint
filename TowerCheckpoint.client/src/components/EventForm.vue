@@ -14,11 +14,11 @@
         <input v-model="eventData.coverImg" class="form-control" type="url" required="true" placeholder="event coverImg">
       </div>
       <div class="col-12">
-        <label for="event-category">Type</label>
-        <select v-model="eventData.category" class="form-control" id="event-category" required="true">
+        <label for="event-type">Type</label>
+        <select v-model="eventData.type" class="form-control" id="event-type" required="true">
           <option value="concert">concert</option>
           <option value="convention">convention</option>
-          <option value="sport">sport</option>
+          <option value="sports">sports</option>
           <option value="digital">digital</option>
         </select>
       </div>
@@ -55,7 +55,7 @@ setup() {
   // NOTE: you have to push this into your brain. The only thing that a ref does is act as an object that is a placeholder to put the data that is submitted from our form. This data is then passed to the create to create a new event
   const eventData = ref({});
   function resetForm(){
-    eventData.value = {category: ''}
+    eventData.value = {type: ''}
   }
   return {
     // NOTE: remember you have to return the ref so that it can be referenced in your html

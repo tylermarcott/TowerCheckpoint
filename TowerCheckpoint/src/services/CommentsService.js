@@ -14,6 +14,13 @@ class CommentsService {
     return comment
   }
 
+  async deleteComment(commentId) {
+    const comment = await dbContext.Comment.findById(commentId)
+    await comment.remove()
+
+    return 'Comment deleted.'
+  }
+
 }
 
 export const commentsService = new CommentsService()

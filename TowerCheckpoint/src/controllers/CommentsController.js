@@ -14,7 +14,9 @@ export class CommentsController extends BaseController {
   }
   async createComment(req, res, next) {
     try {
-      const comment = await commentsService.createComment()
+      const body = req.body
+      body.creatorId = req.userInfo.id //NOTE: forgot this again. HAVE to add creatorID from user info first.
+      const comment = await commentsService.createComment(body)
       res.send(comment)
     } catch (error) {
       next(error)

@@ -4,6 +4,7 @@
 <!-- TODO: left off here. I want to be able to create events now IF I am logged in. -->
 
 
+
   <section class="container">
 <div class="row justify-content-center mt-3">
   <div class="col-2 text-center">
@@ -32,6 +33,8 @@
       </div>
     </div>
   </section>
+
+  
 </template>
 
 <script>

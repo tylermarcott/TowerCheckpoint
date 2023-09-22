@@ -36,6 +36,12 @@ class EventsService{
     AppState.activeEventTickets = res.data.map(ticket => new Ticket(ticket))
   }
 
+  async getCommentsByEventId(eventId) {
+    const res = await api.get(`api/events/${eventId}/comments`)
+    logger.log('got the following comments:', res.data)
+    AppState.activeComments.map(comment => new Comment(comment))
+  }
+
 }
 
 

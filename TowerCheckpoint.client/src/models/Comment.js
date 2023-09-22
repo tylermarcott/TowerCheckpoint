@@ -7,5 +7,6 @@ export class Comment{
     this.body = data.body
     this.isAttending = data.isAttending
     this.creator = data.creator
+    this.eventId = data.eventId
   }
 }

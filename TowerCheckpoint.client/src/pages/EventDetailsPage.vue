@@ -4,6 +4,7 @@
   <div class="row justify-content-center mb-5">
     <div class="col-8 d-flex justify-content-center elevation-2 bg-light">
       <!-- NOTE: do not forget to use the elvis operator OR a v-if statement to compensate for conditions where activeEvent is null. If you don't do this, you will get errors saying can't read properties of undefined or something similar. -->
+      <!-- FIXME: have sold out displayed for when it's canceled. Display 2 different images for if it's cancelled or if it's sold out -->
       <img v-if="event?.isCanceled || ((event?.capacity - event?.ticketCount) == 0)" src="https://pngimg.com/d/sold_out_PNG61.png" alt="">
       <img v-if="!(event?.isCanceled || ((event?.capacity - event?.ticketCount) == 0))" class="img" :src="event?.coverImg" :alt="event?.name">
     </div>
@@ -42,6 +43,8 @@
         <div class="col-6 text-center">
           <!-- TODO: make syntax for creating a ticket for a user when they click attend -->
           <!-- <button @click="createTicket" v-if="!((event?.capacity - event?.ticketCount) == 0)" class="btn btn-warning">Attend</button> -->
+
+          <!-- FIXME: having some button issues now idk why lol look into this. -->
 
           <button v-if="!isAttending && user.isAuthenticated && !event?.isCanceled" @click="createTicket" role="button" class="btn btn-warning"><i class="mdi mdi-plus"></i> Purchase Ticket</button>
           <button class="btn btn danger" v-else-if="event?.isCanceled">EVENT CANCELED</button>
@@ -82,8 +85,12 @@
     </form>
   </section>
 
-
-
+  <!-- STUB: comments section -->
+  <section>
+    <div v-for="comment in comments" :key="comment.id">
+    {{ comment.body }}
+    </div>
+  </section>
 
 
 <!-- TODO: let's do a raw data dump of the comments here first to show we can get comments to the page -->
@@ -111,8 +118,9 @@ setup() {
   watchEffect(()=> {
     getEventById();
     getTicketsByEventId();
+    getCommentsByEventId();
   })
-  onMounted(()=> getCommentsByEvent())
+  onMounted(()=> getCommentsByEventId())
 
   async function getEventById(){
     try {
@@ -122,9 +130,9 @@ setup() {
     }
   }
 
-  async function getCommentsByEvent(){
+  async function getCommentsByEventId(){
     try {
-      await commentsService.getCommentsByEvent(route.params.eventId)
+      await eventsService.getCommentsByEventId(route.params.eventId)
     } catch (error) {
       Pop.error(error)
     }
@@ -144,6 +152,7 @@ setup() {
     user: computed(()=> AppState.user),
     account: computed(()=> AppState.account),
     tickets: computed(()=> AppState.activeEventTickets),
+    comments: computed(()=> AppState.activeComments),
     isAttending: computed(()=> AppState.activeEventTickets.find(ticket => ticket.accountId == AppState.account.id)),
 
 
@@ -162,9 +171,11 @@ setup() {
     // TODO: what do I need to create this comment? I need the form data, and I need the id of the person who is creating it. In this case, that will be whoever is logged in, so user.id?
     async createComment(){
       try {
-        // FIXME: commentData is undefined
-        logger.log('here is our form data:', commentData.value)
-        await commentsService.createComment(commentData.value, AppState.account.id)
+
+        logger.log('eventId:', route.params.eventId)
+        commentData.value.eventId = route.params.eventId
+        await commentsService.createComment(commentData.value)
+        Pop.toast('Comment created', 'success')
       } catch (error) {
         Pop.error(error)
       }

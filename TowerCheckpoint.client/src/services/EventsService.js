@@ -31,7 +31,14 @@ class EventsService{
 
     AppState.activeEvent = new Event(res.data)
   }
+
+  async getTicketsByEventId(eventId) {
+    const res = await api.get(`api/events/${eventId}/tickets`)
+    logger.log('here is the tickets we got for the event:', res.data)
+  }
+
 }
+
 
 
 export const eventsService = new EventsService()

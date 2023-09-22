@@ -86,6 +86,7 @@ import {AppState} from "../AppState.js"
 import { logger } from "../utils/Logger.js";
 import {commentsService} from "../services/CommentsService.js"
 import { ref } from "vue";
+import {ticketsService} from '../services/TicketsService.js'
 
 export default {
 setup() {
@@ -93,6 +94,7 @@ setup() {
   const route = useRoute()
   watchEffect(()=> {
     getEventById();
+    getTicketsByEventId();
   })
   onMounted(()=> getCommentsByEvent())
 
@@ -112,11 +114,20 @@ setup() {
     }
   }
 
+  async function getTicketsByEventId(){
+    try {
+      await eventsService.getTicketsByEventId(route.params.eventId)
+    } catch (error) {
+      Pop.error(error)
+    }
+  }
+
   return {
     commentData,
     event: computed(()=> AppState.activeEvent),
     user: computed(()=> AppState.user),
     account: computed(()=> AppState.account),
+    isAttending: computed(()=> AppState.activeEventTickets.find(ticket => ticket.accountId == AppState.account.id)),
 
 
     // TODO: have to change the raw data dump time to a specified time
@@ -142,12 +153,14 @@ setup() {
       }
     },
 
-    // TODO: ok, so what do I need in order to create a ticket? I need the id of the event the ticket is being created for, and I need the profile that is creating the ticket.
     async createTicket(){
       try {
-        const eventId = AppState.activeEvent.id
-        const userId = AppState.user.id
-        await 
+        let ticketData = {eventId: route.params.eventId} // just creating a body with the eventId on it = to param route
+        await ticketsService.createTicket(ticketData)
+
+
+        // FIXME: this works, but a user shouldn't be able to purchase more than one ticket to a specific event
+        AppState.activeEvent.capacity--
       } catch (error) {
         Pop.error(error)
       }

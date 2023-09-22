@@ -8,6 +8,18 @@
       <img v-if="!(event?.isCanceled || ((event?.capacity - event?.ticketCount) == 0))" class="img" :src="event?.coverImg" :alt="event?.name">
     </div>
   </div>
+
+  <!-- TODO: have to create a v-for for the different tickets, and have users who are attending the event's pictures displayed -->
+  <div class="col-12 card">
+    People with tickets:
+    <div class="row">
+      <div class="col-1">
+        <img v-on:mouseover="name" class="profile-img" v-for="ticket in tickets" :key="ticket.id" :src="ticket.profile.picture" alt="">
+        <img/>
+      </div>
+    </div>
+  </div>
+
   <div class="row justify-content-center">
     <div class="col-10 details-card elevation-2 bg-light">
       <div class="row text-center m-2">
@@ -31,12 +43,16 @@
           <!-- TODO: make syntax for creating a ticket for a user when they click attend -->
           <!-- <button @click="createTicket" v-if="!((event?.capacity - event?.ticketCount) == 0)" class="btn btn-warning">Attend</button> -->
 
-          <button v-if="!isAttending && user.isAuthenticated" @click="createTicket" role="button" class="btn btn-warning"><i class="mdi mdi-plus"></i> Purchase Ticket</button>
-          <button v-else-if="user.isAuthenticated" @click="deleteTicket" role="button" class="btn btn-danger"><i class="mdi mdi-minus"></i> Return Ticket</button>
+          <button v-if="!isAttending && user.isAuthenticated && !event?.isCanceled" @click="createTicket" role="button" class="btn btn-warning"><i class="mdi mdi-plus"></i> Purchase Ticket</button>
+          <button class="btn btn danger" v-else-if="event?.isCanceled">EVENT CANCELED</button>
+          <button class="sold-out" v-else-if="((event?.capacity - event?.ticketCount) == 0)">SOLD OUT</button>
           <button v-else role="button" class="btn btn-dark">Log in to purchase ticket!</button>
-          <h3 class="sold-out" v-if="(event?.capacity - event?.ticketCount) == 0">SOLD OUT</h3>
 
-          <button @click="cancelEvent" class="btn btn-danger" v-if="event?.creatorId == account.id">Cancel Event</button>
+          <button v--if="user.isAuthenticated && !event?.isCanceled && !((event?.capacity - event?.ticketCount) == 0)" @click="deleteTicket" role="button" class="btn btn-danger"><i class="mdi mdi-minus"></i> Return Ticket</button>
+          
+          <!-- FIXME: the only issue on this is that when the event is canceled, still have option to return ticket. -->
+
+          <button @click="cancelEvent" class="btn btn-danger" v-if="(event?.creatorId == account.id) && !event?.isCanceled">Cancel Event</button>
         </div>
       </div>
     </div>
@@ -127,6 +143,7 @@ setup() {
     event: computed(()=> AppState.activeEvent),
     user: computed(()=> AppState.user),
     account: computed(()=> AppState.account),
+    tickets: computed(()=> AppState.activeEventTickets),
     isAttending: computed(()=> AppState.activeEventTickets.find(ticket => ticket.accountId == AppState.account.id)),
 
 
@@ -157,9 +174,6 @@ setup() {
       try {
         let ticketData = {eventId: route.params.eventId} // just creating a body with the eventId on it = to param route
         await ticketsService.createTicket(ticketData)
-
-
-        // FIXME: this works, but a user shouldn't be able to purchase more than one ticket to a specific event
         AppState.activeEvent.capacity--
       } catch (error) {
         Pop.error(error)
@@ -191,6 +205,14 @@ setup() {
     object-position: center;
     max-height: 50vh;
     max-width: 100%
+}
+
+.profile-img{
+  border-radius: 50%;
+  max-width: 5vh;
+  max-width: 5vh;
+  object-fit: cover;
+  object-position: center;
 }
 
 .details-card{

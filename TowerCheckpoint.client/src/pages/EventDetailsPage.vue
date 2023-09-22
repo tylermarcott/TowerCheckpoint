@@ -41,6 +41,21 @@
     <CommentCard :comment="comment"/>
   </div> -->
 
+  <!-- TODO: have to create form to create comments here -->
+
+  <section>
+    <form class="m-2" action="">
+      <div class="mb-3">
+        <label for="comment-body" class="form-label">Comment</label>
+        <textarea v-model="commentData.body" class="form-control" id="comment" rows="6"></textarea>
+      </div>
+    </form>
+  </section>
+
+
+
+
+
 <!-- TODO: let's do a raw data dump of the comments here first to show we can get comments to the page -->
 
 </section>
@@ -63,7 +78,7 @@ setup() {
   watchEffect(()=> {
     getEventById();
   })
-  onMounted(()=> getComments())
+  onMounted(()=> getCommentsByEvent())
 
   async function getEventById(){
     try {
@@ -73,7 +88,7 @@ setup() {
     }
   }
 
-  async function getComments(){
+  async function getCommentsByEvent(){
     try {
       await commentsService.getCommentsByEvent(route.params.eventId)
     } catch (error) {
@@ -85,6 +100,7 @@ setup() {
     event: computed(()=> AppState.activeEvent),
     user: computed(()=> AppState.user),
     account: computed(()=> AppState.account),
+    comment: computed(()=> AppState.activeComments),
 
     // TODO: have to change the raw data dump time to a specified time
 

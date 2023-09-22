@@ -50,7 +50,6 @@ import Pop from "../utils/Pop.js";
 import { eventsService } from "../services/EventsService.js";
 import { logger } from "../utils/Logger.js";
 import { Modal } from "bootstrap";
-import { router } from "../router.js";
 import { useRouter } from "vue-router";
 
 export default {
@@ -67,13 +66,18 @@ setup() {
     eventData,
     async createEvent(){
       try {
-        let newEvent = await eventsService.createEvent(eventData.value)
+        const newEvent = await eventsService.createEvent(eventData.value)
         logger.log('creating event with the following data:', eventData.value)
         Pop.toast('Event Created!', 'success')
         resetForm()
-        // FIXME: both of the lines below are broken
-        // Modal.getOrCreateInstance('#create-event').hide()
-        // router.push({name: 'Event Details', params: {eventId: newEvent.id}})
+        Modal.getOrCreateInstance('#create-event').hide()
+
+
+        // FIXME: this is still giving me issues
+        //Error: Missing required param "eventId"
+        router.push({name: 'Event Details', params: {eventId: newEvent.id}})
+
+
 
       } catch (error) {
         Pop.error(error)

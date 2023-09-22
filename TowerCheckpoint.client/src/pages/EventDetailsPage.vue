@@ -23,10 +23,17 @@
         <div class="col-6">
           <h5>Tickets Left: {{ event?.capacity - event?.ticketCount }}</h5>
         </div>
-        <div class="col-6 text-center">
-          
-          <button v-if="!((event?.capacity - event?.ticketCount) == 0)" class="btn btn-warning">Attend</button>
 
+
+        <!-- STUB: create ticket stub -->
+
+        <div class="col-6 text-center">
+          <!-- TODO: make syntax for creating a ticket for a user when they click attend -->
+          <!-- <button @click="createTicket" v-if="!((event?.capacity - event?.ticketCount) == 0)" class="btn btn-warning">Attend</button> -->
+
+          <button v-if="!isAttending && user.isAuthenticated" @click="createTicket" role="button" class="btn btn-warning"><i class="mdi mdi-plus"></i> Purchase Ticket</button>
+          <button v-else-if="user.isAuthenticated" @click="removeTicket" role="button" class="btn btn-danger"><i class="mdi mdi-minus"></i> Return Ticket</button>
+          <button v-else role="button" class="btn btn-dark">Log in to purchase ticket!</button>
           <h3 class="sold-out" v-if="(event?.capacity - event?.ticketCount) == 0">SOLD OUT</h3>
 
           <button @click="cancelEvent" class="btn btn-danger" v-if="event?.creatorId == account.id">Cancel Event</button>
@@ -130,6 +137,17 @@ setup() {
         // FIXME: commentData is undefined
         logger.log('here is our form data:', commentData.value)
         await commentsService.createComment(commentData.value, AppState.account.id)
+      } catch (error) {
+        Pop.error(error)
+      }
+    },
+
+    // TODO: ok, so what do I need in order to create a ticket? I need the id of the event the ticket is being created for, and I need the profile that is creating the ticket.
+    async createTicket(){
+      try {
+        const eventId = AppState.activeEvent.id
+        const userId = AppState.user.id
+        await 
       } catch (error) {
         Pop.error(error)
       }

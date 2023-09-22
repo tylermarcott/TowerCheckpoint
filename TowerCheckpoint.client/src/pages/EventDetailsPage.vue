@@ -34,15 +34,21 @@
       </div>
     </div>
   </div>
-  <div v-for="comment in comments" :key="event.id">
+
+  <!-- FIXME: make sure this is passing the right key, might need to be the event id? -->
+
+  <!-- <div v-for="comment in comments" :key="comment">
     <CommentCard :comment="comment"/>
-  </div>
+  </div> -->
+
+<!-- TODO: let's do a raw data dump of the comments here first to show we can get comments to the page -->
+
 </section>
 
 </template>
 
 <script>
-import { computed, watchEffect } from "vue";
+import { computed, onMounted, watchEffect } from "vue";
 import { useRoute } from "vue-router";
 import Pop from "../utils/Pop.js";
 import { eventsService } from "../services/EventsService.js";
@@ -56,8 +62,8 @@ setup() {
   const route = useRoute()
   watchEffect(()=> {
     getEventById();
-    getComments();
   })
+  onMounted(()=> getComments())
 
   async function getEventById(){
     try {
@@ -69,7 +75,7 @@ setup() {
 
   async function getComments(){
     try {
-      await commentsService.getCommentsByEvent()
+      await commentsService.getCommentsByEvent(route.params.eventId)
     } catch (error) {
       Pop.error(error)
     }

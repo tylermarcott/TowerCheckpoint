@@ -61,13 +61,10 @@
     </div>
   </div>
 
-  <!-- FIXME: make sure this is passing the right key, might need to be the event id? -->
-
-  <!-- <div v-for="comment in comments" :key="comment">
-    <CommentCard :comment="comment"/>
-  </div> -->
 
   <!-- TODO: have to create form to create comments here -->
+
+  <!-- FIXME: getting commentData.value back as undefined, so having an issue with getting data from the form -->
 
   <section>
     <form class="m-2 p-2" @submit.prevent="createComment">
@@ -113,7 +110,7 @@ import {ticketsService} from '../services/TicketsService.js'
 
 export default {
 setup() {
-  const commentData = ({ref})
+  const commentData = ref({})
   const route = useRoute()
   watchEffect(()=> {
     getEventById();
@@ -173,7 +170,9 @@ setup() {
       try {
 
         logger.log('eventId:', route.params.eventId)
+        logger.log('here is our commentData:', commentData.value)
         commentData.value.eventId = route.params.eventId
+
         await commentsService.createComment(commentData.value)
         Pop.toast('Comment created', 'success')
       } catch (error) {

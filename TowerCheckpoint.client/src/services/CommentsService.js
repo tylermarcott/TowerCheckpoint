@@ -7,8 +7,9 @@ import { api } from "./AxiosService.js"
 // TODO: have to test this once create comment is created. There are so few comments in the db and so many events, can't find the events with comments on them lol
 class CommentsService{
 
-  async createComment(formData, userId){
-    logger.log(`creating a comment for ${userId} with the ${formData}`)
+  async createComment(data){
+    const res = await api.post('api/comments', data)
+    AppState.activeComments.push(new Comment(res.data))
   }
 }
 

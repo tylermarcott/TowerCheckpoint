@@ -34,6 +34,9 @@
       </div>
     </div>
   </div>
+  <div v-for="comment in comments" :key="event.id">
+    <CommentCard :comment="comment"/>
+  </div>
 </section>
 
 </template>
@@ -46,17 +49,27 @@ import { eventsService } from "../services/EventsService.js";
 // import { logger } from "../utils/Logger.js";
 import {AppState} from "../AppState.js"
 import { logger } from "../utils/Logger.js";
+import {commentsService} from "../services/CommentsService.js"
 
 export default {
 setup() {
   const route = useRoute()
   watchEffect(()=> {
     getEventById();
+    getComments();
   })
 
   async function getEventById(){
     try {
       await eventsService.getEventById(route.params.eventId)
+    } catch (error) {
+      Pop.error(error)
+    }
+  }
+
+  async function getComments(){
+    try {
+      await commentsService.getCommentsByEvent()
     } catch (error) {
       Pop.error(error)
     }

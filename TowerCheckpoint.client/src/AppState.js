@@ -9,5 +9,8 @@ export const AppState = reactive({
   events: [],
 
   /**@type {Event} */
-  activeEvent: null
+  activeEvent: null,
+
+  /**@type {Comment[]} */
+  activeComments : []
 })

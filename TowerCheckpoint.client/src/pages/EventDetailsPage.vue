@@ -44,11 +44,18 @@
   <!-- TODO: have to create form to create comments here -->
 
   <section>
-    <form class="m-2" action="">
+    <form class="m-2 p-2" @submit.prevent="createComment">
       <div class="mb-3">
-        <label for="comment-body" class="form-label">Comment</label>
-        <textarea v-model="commentData.body" class="form-control" id="comment" rows="6"></textarea>
+        <label for="commentData-body" class="form-label">Comment</label>
+        <textarea v-model="commentData.body" class="form-control" id="comment-body" rows="6"></textarea>
       </div>
+      <div class="form-check mb-3">
+        <input v-model="commentData.isAttending" class="form-check-input" type="checkbox" value="" id="comment-isAttending">
+        <label class="form-check-label" for="flexCheckDefault">
+          Attending event?
+        </label>
+      </div>
+      <button class="btn btn-dark">Submit</button>
     </form>
   </section>
 
@@ -71,9 +78,11 @@ import { eventsService } from "../services/EventsService.js";
 import {AppState} from "../AppState.js"
 import { logger } from "../utils/Logger.js";
 import {commentsService} from "../services/CommentsService.js"
+import { ref } from "vue";
 
 export default {
 setup() {
+  const commentData = ({ref})
   const route = useRoute()
   watchEffect(()=> {
     getEventById();
@@ -97,20 +106,30 @@ setup() {
   }
 
   return {
+    commentData,
     event: computed(()=> AppState.activeEvent),
     user: computed(()=> AppState.user),
     account: computed(()=> AppState.account),
-    comment: computed(()=> AppState.activeComments),
+
 
     // TODO: have to change the raw data dump time to a specified time
 
     async cancelEvent(){
       try {
-
-        // TODO: come back and finish this cancel event function.
-
         logger.log('here is our active event id:', AppState.activeEvent.id)
         const cancelledEvent = await eventsService.cancelEvent(AppState.activeEvent.id)
+        return cancelledEvent
+      } catch (error) {
+        Pop.error(error)
+      }
+    },
+
+    // TODO: what do I need to create this comment? I need the form data, and I need the id of the person who is creating it. In this case, that will be whoever is logged in, so user.id?
+    async createComment(){
+      try {
+        // FIXME: commentData is undefined
+        logger.log('here is our form data:', commentData.value)
+        await commentsService.createComment(commentData.value, AppState.account.id)
       } catch (error) {
         Pop.error(error)
       }

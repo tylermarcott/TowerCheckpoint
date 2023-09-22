@@ -11,6 +11,10 @@ class CommentsService{
     logger.log('got the following comments:', res.data)
     AppState.activeComments.map(comment => new Comment(comment))
   }
+
+  async createComment(formData, userId){
+    logger.log(`creating a comment for ${userId} with the ${formData}`)
+  }
 }
 
 export const commentsService = new CommentsService()

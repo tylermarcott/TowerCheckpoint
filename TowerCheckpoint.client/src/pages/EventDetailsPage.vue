@@ -46,12 +46,12 @@
 
           <!-- FIXME: having some button issues now idk why lol look into this. -->
 
-          <button v-if="!isAttending && user.isAuthenticated && !event?.isCanceled" @click="createTicket" role="button" class="btn btn-warning"><i class="mdi mdi-plus"></i> Purchase Ticket</button>
+          <!-- <button v-if="!isAttending && user.isAuthenticated && !event?.isCanceled" @click="createTicket" role="button" class="btn btn-warning"><i class="mdi mdi-plus"></i> Purchase Ticket</button>
           <button class="btn btn danger" v-else-if="event?.isCanceled">EVENT CANCELED</button>
           <button class="sold-out" v-else-if="((event?.capacity - event?.ticketCount) == 0)">SOLD OUT</button>
           <button v-else role="button" class="btn btn-dark">Log in to purchase ticket!</button>
 
-          <button v--if="user.isAuthenticated && !event?.isCanceled && !((event?.capacity - event?.ticketCount) == 0)" @click="deleteTicket" role="button" class="btn btn-danger"><i class="mdi mdi-minus"></i> Return Ticket</button>
+          <button v--if="user.isAuthenticated && !event?.isCanceled && !((event?.capacity - event?.ticketCount) == 0)" @click="deleteTicket" role="button" class="btn btn-danger"><i class="mdi mdi-minus"></i> Return Ticket</button> -->
           
           <!-- FIXME: the only issue on this is that when the event is canceled, still have option to return ticket. -->
 
@@ -83,14 +83,13 @@
   </section>
 
   <!-- STUB: comments section -->
+  <!-- TODO: LEAVE OFF HERE. Have to make this look prettier and comments should be done. Then I need to move on to the profile page and populate which events you have tickets to. -->
   <section>
     <div v-for="comment in comments" :key="comment.id">
-    {{ comment.body }}
+      comment here
+      {{ comment.body }}
     </div>
   </section>
-
-
-<!-- TODO: let's do a raw data dump of the comments here first to show we can get comments to the page -->
 
 </section>
 
@@ -157,7 +156,6 @@ setup() {
 
     async cancelEvent(){
       try {
-        logger.log('here is our active event id:', AppState.activeEvent.id)
         const cancelledEvent = await eventsService.cancelEvent(AppState.activeEvent.id)
         return cancelledEvent
       } catch (error) {
@@ -168,11 +166,7 @@ setup() {
     // TODO: what do I need to create this comment? I need the form data, and I need the id of the person who is creating it. In this case, that will be whoever is logged in, so user.id?
     async createComment(){
       try {
-
-        logger.log('eventId:', route.params.eventId)
-        logger.log('here is our commentData:', commentData.value)
         commentData.value.eventId = route.params.eventId
-
         await commentsService.createComment(commentData.value)
         Pop.toast('Comment created', 'success')
       } catch (error) {
@@ -193,11 +187,7 @@ setup() {
     async deleteTicket(){
       try {
         let ticket = AppState.activeEventTickets.find(ticket => ticket.accountId == AppState.account.id)
-
-        logger.log('found ticket with the following id:', ticket.id)
-
         await ticketsService.deleteTicket(ticket.id)
-
         AppState.activeEvent.capacity++
       } catch (error) {
         Pop.error(error)

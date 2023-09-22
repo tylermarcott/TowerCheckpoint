@@ -3,6 +3,7 @@ import { logger } from "../utils/Logger.js"
 import { api } from "./AxiosService.js"
 import { Event } from "../models/Event.js"
 import { Ticket } from "../models/Ticket.js"
+import { Comment } from "../models/Comment.js"
 
 class EventsService{
   async getEvents(){
@@ -39,9 +40,10 @@ class EventsService{
   async getCommentsByEventId(eventId) {
     const res = await api.get(`api/events/${eventId}/comments`)
     logger.log('got the following comments:', res.data)
-    AppState.activeComments.map(comment => new Comment(comment))
-  }
+    AppState.activeComments = res.data.map(c => new Comment(c))
 
+    logger.log('got the following comments in AppState:', AppState.activeComments)
+  }
 }
 
 

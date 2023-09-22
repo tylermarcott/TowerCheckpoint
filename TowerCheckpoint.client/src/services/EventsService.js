@@ -2,8 +2,7 @@ import { AppState } from "../AppState.js"
 import { logger } from "../utils/Logger.js"
 import { api } from "./AxiosService.js"
 import { Event } from "../models/Event.js"
-
-logger
+import { Ticket } from "../models/Ticket.js"
 
 class EventsService{
   async getEvents(){
@@ -34,7 +33,7 @@ class EventsService{
 
   async getTicketsByEventId(eventId) {
     const res = await api.get(`api/events/${eventId}/tickets`)
-    logger.log('here is the tickets we got for the event:', res.data)
+    AppState.activeEventTickets = res.data.map(ticket => new Ticket(ticket))
   }
 
 }

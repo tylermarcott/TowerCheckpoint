@@ -32,7 +32,7 @@
           <!-- <button @click="createTicket" v-if="!((event?.capacity - event?.ticketCount) == 0)" class="btn btn-warning">Attend</button> -->
 
           <button v-if="!isAttending && user.isAuthenticated" @click="createTicket" role="button" class="btn btn-warning"><i class="mdi mdi-plus"></i> Purchase Ticket</button>
-          <button v-else-if="user.isAuthenticated" @click="removeTicket" role="button" class="btn btn-danger"><i class="mdi mdi-minus"></i> Return Ticket</button>
+          <button v-else-if="user.isAuthenticated" @click="deleteTicket" role="button" class="btn btn-danger"><i class="mdi mdi-minus"></i> Return Ticket</button>
           <button v-else role="button" class="btn btn-dark">Log in to purchase ticket!</button>
           <h3 class="sold-out" v-if="(event?.capacity - event?.ticketCount) == 0">SOLD OUT</h3>
 
@@ -161,6 +161,20 @@ setup() {
 
         // FIXME: this works, but a user shouldn't be able to purchase more than one ticket to a specific event
         AppState.activeEvent.capacity--
+      } catch (error) {
+        Pop.error(error)
+      }
+    },
+
+    async deleteTicket(){
+      try {
+        let ticket = AppState.activeEventTickets.find(ticket => ticket.accountId == AppState.account.id)
+
+        logger.log('found ticket with the following id:', ticket.id)
+
+        await ticketsService.deleteTicket(ticket.id)
+
+        AppState.activeEvent.capacity++
       } catch (error) {
         Pop.error(error)
       }

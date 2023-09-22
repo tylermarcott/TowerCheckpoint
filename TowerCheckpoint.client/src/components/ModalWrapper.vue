@@ -29,7 +29,7 @@
 
 <script>
 export default {
-props: { id: { type: String, required: true }, showButton: { type: Boolean, default: true } },
+  props: { id: { type: String, required: true }, showButton: { type: Boolean, default: true }, btnColor: { type: String, default: 'dark' } },
 setup() {
   return {};
 },

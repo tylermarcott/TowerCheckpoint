@@ -55,7 +55,7 @@ import { useRouter } from "vue-router";
 export default {
 setup() {
   // NOTE: you have to push this into your brain. The only thing that a ref does is act as an object that is a placeholder to put the data that is submitted from our form. This data is then passed to the create to create a new event
-  const eventData = ref({});
+  const eventData = ref({})
   const router = useRouter()
   function resetForm(){
     eventData.value = {type: ''}
@@ -66,15 +66,10 @@ setup() {
     eventData,
     async createEvent(){
       try {
-        const newEvent = await eventsService.createEvent(eventData.value)
-        logger.log('creating event with the following data:', eventData.value)
+        let newEvent = await eventsService.createEvent(eventData.value)
         Pop.toast('Event Created!', 'success')
         resetForm()
         Modal.getOrCreateInstance('#create-event').hide()
-
-
-        // FIXME: this is still giving me issues
-        //Error: Missing required param "eventId"
         router.push({name: 'Event Details', params: {eventId: newEvent.id}})
 
 

@@ -84,10 +84,10 @@
 
   <!-- STUB: comments section -->
   <!-- TODO: LEAVE OFF HERE. Have to make this look prettier and comments should be done. Then I need to move on to the profile page and populate which events you have tickets to. -->
-  <section>
-    <div v-for="comment in comments" :key="comment.id">
-      comment here
-      {{ comment.body }}
+  <section class="row justify-content-center">
+    <!-- NOTE: the :comment='comment', this is our props that we are passing to our component -->
+    <div v-for="comment in comments" :key="comment.id" class="col-12 col-md-10 elevation-2 m-2 p-2">
+      <CommentCard :comment="comment"/>
     </div>
   </section>
 
@@ -126,6 +126,8 @@ setup() {
     }
   }
 
+
+  // FIXME: comments not reactively pushing to the bottom of the comment list.... fix
   async function getCommentsByEventId(){
     try {
       await eventsService.getCommentsByEventId(route.params.eventId)

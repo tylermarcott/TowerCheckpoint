@@ -37,40 +37,24 @@
           <h5>Tickets Left: {{ event?.capacity - event?.ticketCount }}</h5>
         </div>
 
+        <!-- STUB: ticket stub -->
 
-        <!-- STUB: create ticket stub -->
+        <div class="col-6 text-center p-2">
 
-        <div class="col-6 text-center">
+          <button @click="createTicket" v-if="user.isAuthenticated && !isAttending && (ticketTotal != 0) && !event?.isCanceled" class="btn btn-warning m-1"><i class="mdi mdi-plus"></i> Purchase Ticket</button>
 
+          <button v-else-if="user.isAuthenticated && !event?.isCanceled && isAttending" @click="deleteTicket" role="button" class="btn btn-danger m-1"><i class="mdi mdi-minus"></i> Return Ticket</button>
 
+          <button class="btn btn-dark" v-else-if="!user.isAuthenticated && !event.isCanceled">Please Log in to purchase or return tickets!</button>
 
-          <!-- TODO: ok, so what do I want for the attend button which creates a ticket? I want it to be shown if there is no ticket on the user account for this event. I want it hidden if the event is sold out, canceled or the user already has a ticket to the event.  -->
+          <h3 v-if="(ticketTotal == 0)">SOLD OUT</h3>
 
-          <button @click="createTicket" v-if="user.isAuthenticated && !isAttending && (ticketTotal != 0) && !event?.isCanceled" class="btn btn-warning"><i class="mdi mdi-plus"></i> Purchase Ticket</button>
-
-          <button v-if="user.isAuthenticated && !event?.isCanceled && isAttending" @click="deleteTicket" role="button" class="btn btn-danger"><i class="mdi mdi-minus"></i> Return Ticket</button>
-
-
-
-
-          <!-- <button class="btn btn danger" v-else-if="event?.isCanceled">EVENT CANCELED</button>
-          <button class="sold-out" v-else-if="((event?.capacity - event?.ticketCount) == 0)">SOLD OUT</button>
-          <button v-else role="button" class="btn btn-dark">Log in to purchase ticket!</button>
-
-          <button v--if="user.isAuthenticated && !event?.isCanceled && !((event?.capacity - event?.ticketCount) == 0)" @click="deleteTicket" role="button" class="btn btn-danger"><i class="mdi mdi-minus"></i> Return Ticket</button> -->
-          
-          <!-- FIXME: the only issue on this is that when the event is canceled, still have option to return ticket. -->
-
-          <button @click="cancelEvent" class="btn btn-danger" v-if="(event?.creatorId == account.id) && !event?.isCanceled">Cancel Event</button>
+          <button @click="cancelEvent" class="btn btn-danger m-1" v-if="(event?.creatorId == account.id) && !event?.isCanceled && (ticketTotal != 0)">Cancel Event</button>
+          <h3 v-else-if="event?.isCanceled && (ticketTotal != 0)">Event Canceled</h3>
         </div>
       </div>
     </div>
   </div>
-
-
-  <!-- TODO: have to create form to create comments here -->
-
-  <!-- FIXME: getting commentData.value back as undefined, so having an issue with getting data from the form -->
 
   <section>
     <form class="m-2 p-2" @submit.prevent="createComment">
@@ -89,16 +73,13 @@
   </section>
 
   <!-- STUB: comments section -->
-  <!-- TODO: LEAVE OFF HERE. Have to make this look prettier and comments should be done. Then I need to move on to the profile page and populate which events you have tickets to. -->
   <section class="row justify-content-center">
     <!-- NOTE: the :comment='comment', this is our props that we are passing to our component -->
     <div v-for="comment in comments" :key="comment.id" class="col-12 col-md-10 elevation-2 m-2 p-2">
       <CommentCard :comment="comment"/>
     </div>
   </section>
-
 </section>
-
 </template>
 
 <script>
@@ -106,9 +87,7 @@ import { computed, onMounted, watchEffect } from "vue";
 import { useRoute } from "vue-router";
 import Pop from "../utils/Pop.js";
 import { eventsService } from "../services/EventsService.js";
-// import { logger } from "../utils/Logger.js";
 import {AppState} from "../AppState.js"
-import { logger } from "../utils/Logger.js";
 import {commentsService} from "../services/CommentsService.js"
 import { ref } from "vue";
 import {ticketsService} from '../services/TicketsService.js'
@@ -172,7 +151,6 @@ setup() {
       }
     },
 
-    // TODO: what do I need to create this comment? I need the form data, and I need the id of the person who is creating it. In this case, that will be whoever is logged in, so user.id?
     async createComment(){
       try {
         commentData.value.eventId = route.params.eventId

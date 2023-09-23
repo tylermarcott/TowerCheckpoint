@@ -41,13 +41,19 @@
         <!-- STUB: create ticket stub -->
 
         <div class="col-6 text-center">
-          <!-- TODO: make syntax for creating a ticket for a user when they click attend -->
-          <!-- <button @click="createTicket" v-if="!((event?.capacity - event?.ticketCount) == 0)" class="btn btn-warning">Attend</button> -->
 
-          <!-- FIXME: having some button issues now idk why lol look into this. -->
 
-          <!-- <button v-if="!isAttending && user.isAuthenticated && !event?.isCanceled" @click="createTicket" role="button" class="btn btn-warning"><i class="mdi mdi-plus"></i> Purchase Ticket</button>
-          <button class="btn btn danger" v-else-if="event?.isCanceled">EVENT CANCELED</button>
+
+          <!-- TODO: ok, so what do I want for the attend button which creates a ticket? I want it to be shown if there is no ticket on the user account for this event. I want it hidden if the event is sold out, canceled or the user already has a ticket to the event.  -->
+
+          <button @click="createTicket" v-if="user.isAuthenticated && !isAttending && (ticketTotal != 0) && !event?.isCanceled" class="btn btn-warning"><i class="mdi mdi-plus"></i> Purchase Ticket</button>
+
+          <button v-if="user.isAuthenticated && !event?.isCanceled && isAttending" @click="deleteTicket" role="button" class="btn btn-danger"><i class="mdi mdi-minus"></i> Return Ticket</button>
+
+
+
+
+          <!-- <button class="btn btn danger" v-else-if="event?.isCanceled">EVENT CANCELED</button>
           <button class="sold-out" v-else-if="((event?.capacity - event?.ticketCount) == 0)">SOLD OUT</button>
           <button v-else role="button" class="btn btn-dark">Log in to purchase ticket!</button>
 
@@ -146,6 +152,7 @@ setup() {
 
   return {
     commentData,
+    ticketTotal: computed(()=> (AppState.activeEvent.capacity - AppState.activeEvent.ticketCount)),
     event: computed(()=> AppState.activeEvent),
     user: computed(()=> AppState.user),
     account: computed(()=> AppState.account),

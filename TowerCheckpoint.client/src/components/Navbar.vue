@@ -53,7 +53,7 @@ export default {
   --muted: #C2714F;
   --bright: #E0607E;
   --mellow: #D36060;
-  --pale: #F6C5AF
+  --pale: #F6C5AF;
 }
 
 a:hover {

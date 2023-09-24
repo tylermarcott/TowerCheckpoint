@@ -3,14 +3,12 @@
 <section v-if="event" class="container">
   <div class="row justify-content-center mb-5">
     <div class="col-8 d-flex justify-content-center elevation-2 bg-light">
-      <!-- NOTE: do not forget to use the elvis operator OR a v-if statement to compensate for conditions where activeEvent is null. If you don't do this, you will get errors saying can't read properties of undefined or something similar. -->
-      <!-- FIXME: have sold out displayed for when it's canceled. Display 2 different images for if it's cancelled or if it's sold out -->
-      <img v-if="event.isCanceled || ((event.capacity - event.ticketCount) == 0)" src="https://pngimg.com/d/sold_out_PNG61.png" alt="">
+      <img class="img" v-if="event.isCanceled" src="https://media.istockphoto.com/id/1278420063/vector/cancel-red-ink-stamp.jpg?s=612x612&w=0&k=20&c=ElHKDdD9UnVxJqDLezLRJ7zhRC-hJVdvEFCsnJ9lNb0=" alt="">
+      <img class="img" v-else-if="((event.capacity - event.ticketCount) == 0)" src="https://media.istockphoto.com/id/1019461088/vector/sold-out-red-square-grunge-stamp-on-white.jpg?s=612x612&w=0&k=20&c=Q1funtaP0CzqKKU_Okp6QQXGP79-X_cNAYd7trlR5-s=" alt="">
       <img v-if="!(event.isCanceled || ((event.capacity - event.ticketCount) == 0))" class="img" :src="event.coverImg" :alt="event.name">
     </div>
   </div>
 
-  <!-- TODO: have to create a v-for for the different tickets, and have users who are attending the events pictures displayed -->
   <div class="col-12 card">
     People with tickets:
     <div class="row">

@@ -1,25 +1,20 @@
 <template>
-
-
-<!-- TODO: left off here. I want to be able to create events now IF I am logged in. -->
-
-
-
+  <!-- TODO: should probably add a media query here to make the buttons look nicer on mobile. -->
   <section class="container">
 <div class="row justify-content-center mt-3">
-  <div class="col-2 text-center">
+  <div class="col-4 col-md-2 text-center m-1">
     <button @click="filterBy = ''" class="btn btn-dark">All</button>
   </div>
-  <div class="col-2 text-center">
+  <div class="col-4 col-md-2 text-center m-1">
     <button @click="filterBy = 'concert'" class="btn btn-dark">Concert</button>
   </div>
-    <div class="col-2 text-center">
+    <div class="col-4 col-md-2 text-center m-1">
     <button @click="filterBy = 'convention'" class="btn btn-dark">Convention</button>
   </div>
-    <div class="col-2 text-center">
+    <div class="col-4 col-md-2 text-center m-1">
     <button @click="filterBy = 'sport'" class="btn btn-dark">Sport</button>
   </div>
-    <div class="col-2 text-center">
+    <div class="col-4 col-md-2 text-center m-1">
     <button @click="filterBy = 'digital'" class="btn btn-dark">Digital</button>
   </div>
 </div>

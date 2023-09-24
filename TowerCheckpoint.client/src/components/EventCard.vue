@@ -1,9 +1,9 @@
 <template>
 
 <router-link :to="{path: `events/${event.id}`}">
-        <div class="elevation-3 desc-card">
+        <div class="elevation-3 desc-card text-light p-2">
           <img class="img" :src="event.coverImg" :alt="event.name">
-          <div class="text-center desc-card">
+          <div class="text-center desc-card m-2">
             <h5>{{ event.name }}</h5>
             <div>Ticket left: {{ event.capacity - event.ticketCount }}</div>
           </div>
@@ -37,7 +37,7 @@ setup() {
 }
 
 .desc-card{
-  background-color: #f9f6f6a6;
+  background-color: #92946B;
   backdrop-filter: blur;
   border-radius: 5px;
 }

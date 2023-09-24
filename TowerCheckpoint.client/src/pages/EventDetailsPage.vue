@@ -1,16 +1,16 @@
 
 <template>
-<section class="container">
+<section v-if="event" class="container">
   <div class="row justify-content-center mb-5">
     <div class="col-8 d-flex justify-content-center elevation-2 bg-light">
       <!-- NOTE: do not forget to use the elvis operator OR a v-if statement to compensate for conditions where activeEvent is null. If you don't do this, you will get errors saying can't read properties of undefined or something similar. -->
       <!-- FIXME: have sold out displayed for when it's canceled. Display 2 different images for if it's cancelled or if it's sold out -->
-      <img v-if="event?.isCanceled || ((event?.capacity - event?.ticketCount) == 0)" src="https://pngimg.com/d/sold_out_PNG61.png" alt="">
-      <img v-if="!(event?.isCanceled || ((event?.capacity - event?.ticketCount) == 0))" class="img" :src="event?.coverImg" :alt="event?.name">
+      <img v-if="event.isCanceled || ((event.capacity - event.ticketCount) == 0)" src="https://pngimg.com/d/sold_out_PNG61.png" alt="">
+      <img v-if="!(event.isCanceled || ((event.capacity - event.ticketCount) == 0))" class="img" :src="event.coverImg" :alt="event.name">
     </div>
   </div>
 
-  <!-- TODO: have to create a v-for for the different tickets, and have users who are attending the event's pictures displayed -->
+  <!-- TODO: have to create a v-for for the different tickets, and have users who are attending the events pictures displayed -->
   <div class="col-12 card">
     People with tickets:
     <div class="row">
@@ -24,17 +24,17 @@
   <div class="row justify-content-center">
     <div class="col-10 details-card elevation-2 bg-light">
       <div class="row text-center m-2">
-        <h3>{{ event?.name }}</h3>
+        <h3>{{ event.name }}</h3>
       </div>
       <div class="row text-center m-2">
-        <h5>{{ event?.location }}, {{ event?.startDate }}</h5>
+        <h5>{{ event.location }}, {{ dateFormat(event.startDate)}}</h5>
       </div>
       <div class="row text-center m-2">
-        <p>{{ event?.description }}</p>
+        <p>{{ event.description }}</p>
       </div>
       <div class="row mt-5 ms-2">
         <div class="col-6">
-          <h5>Tickets Left: {{ event?.capacity - event?.ticketCount }}</h5>
+          <h5>Tickets Left: {{ event.capacity - event.ticketCount }}</h5>
         </div>
 
         <!-- STUB: ticket stub -->
@@ -180,7 +180,17 @@ setup() {
       } catch (error) {
         Pop.error(error)
       }
-    }
+    },
+
+      dateFormat(date) {
+        let newDate = new Date(date).toLocaleDateString('en-us', { month: 'long', day: 'numeric' })
+        return newDate
+      },
+
+      timeFormat(time) {
+        let newTime = new Date(time).toLocaleTimeString('en-us', { hour: 'numeric', minute: '2-digit' })
+        return newTime
+      }
   };
 },
 };

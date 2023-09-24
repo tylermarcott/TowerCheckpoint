@@ -1,8 +1,6 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-dark px-3">
-    <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
-      <h1>_Towers</h1>
-    </router-link>
+      <div class="title">_Towers</div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
       aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -10,21 +8,22 @@
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav me-auto">
         <li>
-          <router-link :to="{ name: 'Home' }" class="btn text-black lighten-30 selectable text-uppercase">
+          <router-link :to="{ name: 'Home' }" class="btn text-black lighten-30 selectable text-uppercase mb-1">
             Home
           </router-link>
         </li>
       </ul>
 
-      <ModalWrapper id="create-event" v-if="user.isAuthenticated">
-        <template #button>
-          <i class="mdi mdi-plus">Create Event</i>
-        </template>
-        <template #body>
-          <EventForm/>
-        </template>
-      </ModalWrapper>
-
+      <div class="me-2">
+        <ModalWrapper id="create-event" v-if="user.isAuthenticated">
+          <template #button>
+            <i class="mdi mdi-plus">Create Event</i>
+          </template>
+          <template #body>
+            <EventForm/>
+          </template>
+        </ModalWrapper>
+      </div>
       <Login />
     </div>
   </nav>
@@ -46,6 +45,17 @@ export default {
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=Caveat&family=Dancing+Script:wght@500&family=Permanent+Marker&display=swap');
+
+.root{
+  --primary: #DBD3AD;
+  --secondary: #92946B;
+  --muted: #C2714F;
+  --bright: #E0607E;
+  --mellow: #D36060;
+  --pale: #F6C5AF
+}
+
 a:hover {
   text-decoration: none;
 }
@@ -54,8 +64,15 @@ a:hover {
   text-transform: uppercase;
 }
 
+.title{
+  font-family: 'Caveat', cursive;
+  font-size: 50px;
+  color: #141313;
+  margin-right: 1em;
+}
+
 .navbar-nav .router-link-exact-active {
-  border-bottom: 2px solid #6d6b94;
+  border-bottom: 2px solid #DBD3AD;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }

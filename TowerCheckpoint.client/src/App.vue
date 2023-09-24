@@ -5,8 +5,10 @@
   <main class="background">
     <router-view />
   </main>
-   <footer class="secondary-background text-light">
-    Come to us for all of your event needs!
+   <footer class="secondary-background text-black fs-5 d-flex align-items-center text-center">
+    <i class="mdi mdi-shimmer"></i>
+    <h5 class="mt-2 mx-1">Coming to us with your event needs is an EVENT-uality</h5>
+    <i class="mdi mdi-shimmer"></i>
   </footer>
 </template>
 
@@ -39,10 +41,13 @@ export default {
 background-color: #92946B;
 }
 
+i{
+  color: gold;
+}
 
 footer {
   display: grid;
   place-content: center;
-  height: 32px;
+  height: 3em;
 }
 </style>

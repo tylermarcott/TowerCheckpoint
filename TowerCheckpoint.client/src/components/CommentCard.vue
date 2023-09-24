@@ -1,14 +1,19 @@
 <template>
   <section class="card comment-card rounded">
-    <div class="row p-2">
-      <img class="profile-img" :src="comment.creator.picture" :alt="comment?.creator.name">
-      {{ comment?.creator.name }}
+    <div class="row p-2 d-flex justify-content-between">
+      <div class="col-3">
+        <img class="profile-img" :src="comment.creator.picture" :alt="comment?.creator.name">
+        {{ comment?.creator.name }}
+      </div>
+      <div v-if="comment?.isAttending" class="col-3">
+        Attending <i class="mdi mdi-check"></i>
+      </div>
     </div>
     <div class="row ms-4">
       {{ comment?.body }}
     </div>
 
-    <button @click="deleteComment(comment?.id)" v-if="comment?.creator.id == comment?.creatorId" class="btn btn-danger">Delete Comment</button>
+    <button @click="deleteComment(comment?.id)" v-if="comment?.creatorId == account.id" class="btn btn-danger">Delete Comment</button>
   </section>
 </template>
 

@@ -12,6 +12,11 @@ class AccountService {
       logger.error('HAVE YOU STARTED YOUR SERVER YET???', err)
     }
   }
+
+  async getTicketsByAccount(userId){
+    logger.log('getting tickets from the following account:', userId)
+  }
+  
 }
 
 export const accountService = new AccountService()

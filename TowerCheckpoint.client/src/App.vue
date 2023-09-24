@@ -32,7 +32,7 @@ export default {
 }
 
 .background{
-  background-color: #6d6b94;
+  background-color: #DBD3AD;
 }
 
 .secondary-background{

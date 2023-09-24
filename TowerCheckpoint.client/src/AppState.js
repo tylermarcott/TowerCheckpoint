@@ -15,5 +15,8 @@ export const AppState = reactive({
   activeComments : [],
 
   /**@type {Ticket[]} */
-  activeEventTickets: []
+  activeEventTickets: [],
+
+  /**@type {Ticket[]} */
+  accountTickets: []
 })

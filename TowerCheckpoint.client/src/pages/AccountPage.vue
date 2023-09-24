@@ -9,6 +9,7 @@
   <!-- NOTE: IMPORTANT: the reason this wasn't working, and the reason I was failing one of those postman tests after it passed for a while, is because I had bad data in my DB. In my DB, I must have had ticket data where I had populated this data before I fixed my populates. This caused tickets to be present that did not have events attached to them. This made it so they test started to fail, and made it so I couldn't populate the different events for the corresponding tickets on my account page.  -->
 
     <section class="row justify-content-center">
+      <h3>Events you have tickets for:</h3>
       <!-- NOTE: the :comment='comment', this is our props that we are passing to our component -->
       <div v-for="ticket in myTickets" :key="ticket.id" class="col-12 col-md-10 elevation-2 m-2 p-2">
         <EventCard :event="ticket.event"/>

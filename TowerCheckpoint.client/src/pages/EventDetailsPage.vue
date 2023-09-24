@@ -72,6 +72,7 @@
     </form>
   </section>
 
+  <!-- FIXME: type error, cannot read properties of undefined (reading 'picture') -->
   <!-- STUB: comments section -->
   <section class="row justify-content-center">
     <!-- NOTE: the :comment='comment', this is our props that we are passing to our component -->
@@ -112,7 +113,7 @@ setup() {
   }
 
 
-  // FIXME: comments not reactively pushing to the bottom of the comment list.... fix
+  // FIXME: comments not reactively pushing to the bottom of the comment list
   async function getCommentsByEventId(){
     try {
       await eventsService.getCommentsByEventId(route.params.eventId)

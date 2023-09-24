@@ -1,10 +1,7 @@
 <template>
-
-  <!-- TODO: next on the list is to create a button at the bottom of the comment so users can delete comments they create -->
-
   <section class="card comment-card rounded">
     <div class="row p-2">
-      <img class="profile-img" :src="comment?.creator.picture" :alt="comment?.creator.name">
+      <img class="profile-img" :src="comment.creator.picture" :alt="comment?.creator.name">
       {{ comment?.creator.name }}
     </div>
     <div class="row ms-4">

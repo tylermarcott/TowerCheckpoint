@@ -5,7 +5,8 @@ import { BadRequest, Forbidden } from "../utils/Errors.js"
 class TicketsService {
   async createTicket(ticketBody) {
     const ticket = await dbContext.Ticket.create(ticketBody)
-    await ticket.populate('profile event')
+    await ticket.populate('event')
+    await ticket.populate('profile', '-email')
     return ticket
   }
 

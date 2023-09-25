@@ -22,6 +22,7 @@ import { computed } from "vue";
 import { AppState } from "../AppState.js";
 import Pop from "../utils/Pop.js";
 import { commentsService } from "../services/CommentsService.js";
+import { Comment } from "../models/Comment.js";  //NOTE: DOUBLE CHECK IMPORTS, this was causing an invalid prop error. I didn't import the comments model, so the prop had no idea what 'Comment was.'
 
 export default {
   props: {comment: {type: Comment || Object, required: true}},

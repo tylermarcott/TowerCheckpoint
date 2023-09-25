@@ -2,7 +2,7 @@
   <header class="secondary-background">
     <Navbar />
   </header>
-  <main class="background">
+  <main class="background p-3">
     <router-view />
   </main>
    <footer class="secondary-background text-black fs-5 d-flex align-items-center text-center">

@@ -17,7 +17,7 @@ import { Event } from "../models/Event.js"; //NOTE: have to import your Event cl
 
 
 export default {
-  props: {event: {type: Event, required: true}},
+  props: {event: {type: Object || Event, required: true}},   //NOTE: this is necessary for preventing warnings when vue is expecting an object but we try to give it an object of type 'Event' instead
 setup() {
   return {
   };

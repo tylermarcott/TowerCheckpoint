@@ -11,7 +11,7 @@
     <section class="row justify-content-center">
       <h3>Events you have tickets for:</h3>
       <!-- NOTE: the :comment='comment', this is our props that we are passing to our component -->
-      <div v-for="ticket in myTickets" :key="ticket.id" class="col-12 col-md-10 elevation-2 m-2 p-2">
+      <div v-for="ticket in myTickets" :key="ticket.id" class="col-10 col-md-7 elevation-2 m-2 p-2">
         <EventCard :event="ticket.event"/>
       </div>
     </section>

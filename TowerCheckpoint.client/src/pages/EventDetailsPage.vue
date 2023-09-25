@@ -2,15 +2,15 @@
 <template>
 <section v-if="event" class="container">
   <div class="row justify-content-center mb-5">
-    <div class="col-8 d-flex justify-content-center elevation-2 bg-light">
+    <div class="col-12 col-md-8 d-flex justify-content-center elevation-2 img-background">
       <img class="img" v-if="event.isCanceled" src="https://media.istockphoto.com/id/1278420063/vector/cancel-red-ink-stamp.jpg?s=612x612&w=0&k=20&c=ElHKDdD9UnVxJqDLezLRJ7zhRC-hJVdvEFCsnJ9lNb0=" alt="">
       <img class="img" v-else-if="((event.capacity - event.ticketCount) == 0)" src="https://media.istockphoto.com/id/1019461088/vector/sold-out-red-square-grunge-stamp-on-white.jpg?s=612x612&w=0&k=20&c=Q1funtaP0CzqKKU_Okp6QQXGP79-X_cNAYd7trlR5-s=" alt="">
       <img v-if="!(event.isCanceled || ((event.capacity - event.ticketCount) == 0))" class="img" :src="event.coverImg" :alt="event.name">
     </div>
   </div>
 
-  <div class="col-12 card">
-    People with tickets:
+  <div class="col-12 ticketholder-card elevation-2">
+    <h5>Ticketholders:</h5>
     <div class="row">
       <div class="col-1">
         <img v-on:mouseover="name" class="profile-img" v-for="ticket in tickets" :key="ticket.id" :src="ticket.profile.picture" alt="">
@@ -20,7 +20,7 @@
   </div>
 
   <div class="row justify-content-center">
-    <div class="col-10 details-card elevation-2 bg-light">
+    <div class="col-12 col-md-10 details-card elevation-2 bg-light">
       <div class="row text-center m-2">
         <h3>{{ event.name }}</h3>
       </div>
@@ -28,7 +28,9 @@
         <h5>{{ event.location }}, {{ dateFormat(event.startDate)}}</h5>
       </div>
       <div class="row text-center m-2">
-        <p>{{ event.description }}</p>
+        <div class="col-12">
+          <p>{{ event.description }}</p>
+        </div>
       </div>
       <div class="row mt-5 ms-2">
         <div class="col-6">
@@ -37,7 +39,7 @@
 
         <!-- STUB: ticket stub -->
 
-        <div class="col-6 text-center p-2">
+        <div class="col-12 col-md-6 text-center p-2">
 
           <button @click="createTicket" v-if="user.isAuthenticated && !isAttending && (ticketTotal != 0) && !event?.isCanceled" class="btn btn-warning m-1"><i class="mdi mdi-plus"></i> Purchase Ticket</button>
 
@@ -54,8 +56,8 @@
     </div>
   </div>
 
-  <section>
-    <form class="m-2 p-2" @submit.prevent="createComment">
+  <section class="row">
+    <form class=" my-2 create-comment-card elevation-2 p-2 col-12" @submit.prevent="createComment">
       <div class="mb-3">
         <label for="commentData-body" class="form-label">Comment</label>
         <textarea v-model="commentData.body" class="form-control" id="comment-body" rows="6"></textarea>
@@ -74,7 +76,7 @@
   <!-- STUB: comments section -->
   <section class="row justify-content-center">
     <!-- NOTE: the :comment='comment', this is our props that we are passing to our component -->
-    <div v-for="comment in comments" :key="comment.id" class="col-12 col-md-10 elevation-2 m-2 p-2">
+    <div v-for="comment in comments" :key="comment.id" class="col-12 col-md-10 elevation-2 m-2 p-2 create-comment-card">
       <CommentCard :comment="comment"/>
     </div>
   </section>
@@ -90,6 +92,7 @@ import {AppState} from "../AppState.js"
 import {commentsService} from "../services/CommentsService.js"
 import { ref } from "vue";
 import {ticketsService} from '../services/TicketsService.js'
+import { Comment } from "../models/Comment.js";
 
 export default {
 setup() {
@@ -203,6 +206,11 @@ setup() {
     max-width: 100%
 }
 
+.img-background{
+  background-color: #92946B;
+  border-radius: 5px;
+}
+
 .profile-img{
   border-radius: 50%;
   max-width: 5vh;
@@ -217,9 +225,22 @@ setup() {
   border-radius: 5px;
 }
 
+.ticketholder-card{
+  background-color: #92946B;
+  margin-bottom: 3em;
+  padding: 1em;
+  border-radius: 5px;
+  min-height: 8em;
+}
+
 .sold-out{
   color:black;
   background-color: red;
   border-radius: 14px;
+}
+
+.create-comment-card{
+  border-radius: 5px;
+  background-color: #92946B;
 }
 </style>

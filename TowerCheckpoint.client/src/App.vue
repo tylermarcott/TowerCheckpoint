@@ -6,9 +6,9 @@
     <router-view />
   </main>
    <footer class="secondary-background text-black fs-5 d-flex align-items-center text-center">
-    <i class="mdi mdi-shimmer"></i>
-    <h5 class="mt-2 mx-1">Coming to us with your event needs is an EVENT-uality</h5>
-    <i class="mdi mdi-shimmer"></i>
+    <i class="mdi mdi-shimmer icon"></i>
+    <h5 class="mt-2 mx-1">Coming to us with your event needs is an EVENT-uality!</h5>
+    <i class="mdi mdi-shimmer icon"></i>
   </footer>
 </template>
 
@@ -41,7 +41,7 @@ export default {
 background-color: #92946B;
 }
 
-i{
+.icon{
   color: gold;
 }
 

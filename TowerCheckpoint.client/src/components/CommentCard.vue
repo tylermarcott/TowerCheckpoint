@@ -1,8 +1,8 @@
 <template>
   <section v-if="comment" class="card comment-card rounded">
     <div class="row p-2 d-flex justify-content-between">
-      <div class="col-3">
-        <img class="profile-img" :src="comment.creator.picture" :alt="comment.creator.name">
+      <div class="col-3" v-if="comment.creator">
+        <img v-if="comment.creator" class="profile-img" :src="comment.creator.picture" :alt="comment.creator.name">
         {{ comment.creator.name }}
       </div>
       <div v-if="comment.isAttending" class="col-3">
@@ -13,7 +13,12 @@
       {{ comment.body }}
     </div>
 
-    <button @click="deleteComment(comment.id)" v-if="comment.creatorId == account.id" class="btn btn-danger">Delete Comment</button>
+    <div class="row justify-content-end d-flex">
+      <div class="col-3">
+        <button @click="deleteComment(comment.id)" v-if="comment.creatorId == account.id" class="btn btn-danger">Delete Comment</button>
+      </div>
+    </div>
+
   </section>
 </template>
 
@@ -46,6 +51,7 @@ setup() {
 .comment-card{
   min-height: 20vh;
   max-width: 100%;
+  background-color: #e9ecef;
 }
 
 .profile-img{

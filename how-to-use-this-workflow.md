@@ -29,13 +29,13 @@ services:
   app:
     image: zarathrian/first_docker:latest
     ports:
-      - "7045:80"  # EC2_PORT:CONTAINER_PORT
+      - "3000:80"  # EC2_PORT:CONTAINER_PORT
     environment:
       - CONNECTION_STRING=mongodb+srv://tylerjmarcott:H0St1d6evZMrTULm@cluster0.ytvgbzj.mongodb.net/?retryWrites=true&w=majority
       - AUTH_DOMAIN=dev-r2l4kl7ifqatct23.us.auth0.com
       - AUTH_AUDIENCE=https://tylerApi.com
       - AUTH_CLIENT_ID=3ugFmbTisZI8MvM7ux0qRbSLZS8X8Zo1
       - NODE_ENV=dev
-
+````
 
 This workflow is triggered when changes are made to the `production` branch

@@ -1,7 +1,7 @@
 <template>
 
 <router-link :to="{path: `events/${event.id}`}">
-        <div class="elevation-3 desc-card text-light p-2">
+        <div class="elevation-3 desc-card text-center text-light p-2">
           <img class="img" :src="event.coverImg" :alt="event.name">
           <div class="text-center desc-card m-2">
             <h5>{{ event.name }}</h5>
@@ -31,7 +31,7 @@ setup() {
 .img{
     object-fit: cover;
     object-position: center;
-    max-height: 50vh;
+    height: 50vh;
     max-width: 100%;
     border-radius: 5px;
 }

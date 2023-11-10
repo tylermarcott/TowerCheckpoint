@@ -16,7 +16,7 @@
   <div class="col-12 ticketholder-card elevation-2">
     <h5>Ticketholders:</h5>
     <div class="row">
-      <div class="col-1">
+      <div class="col-12">
         <img v-on:mouseover="name"  :title="ticket.profile.name" class="profile-img" v-for="ticket in tickets" :key="ticket.id" :src="ticket.profile.picture" :alt="ticket.profile.name">
         <img/>
       </div>
@@ -217,8 +217,9 @@ setup() {
 
 .profile-img{
   border-radius: 50%;
-  max-width: 5vh;
-  max-width: 5vh;
+  padding-left: 3px;
+  max-width: 8vh;
+  max-width: 8vh;
   object-fit: cover;
   object-position: center;
 }

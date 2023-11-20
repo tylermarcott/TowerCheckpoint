@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [vue()],
   base: 'tower',
   build: {
-    outDir: 'docs',
+    outDir: '../server/www',
     sourcemap: false,
   },
   server: {

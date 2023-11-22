@@ -27,7 +27,7 @@ _docker-compose.yml_
 version: '3'
 services:
   app:
-    image: zarathrian/first_docker:latest
+    image: zarathrian/towercheckpoint:latest
     ports:
       - "3000:80"  # EC2_PORT:CONTAINER_PORT
     environment:

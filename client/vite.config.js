@@ -6,7 +6,7 @@ export default defineConfig({
   base: '/tower',
   plugins: [vue()],
   build: {
-    outDir: '../TowerCheckpoint/wwwroot',
+    outDir: 'docs',
     sourcemap: false,
   },
   server: {

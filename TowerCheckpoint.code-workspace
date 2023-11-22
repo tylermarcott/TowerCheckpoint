@@ -1,11 +1,11 @@
 {
   "folders": [
     {
-      "path": "client",
+      "path": "TowerCheckpoint.client",
       "name": "client"
     },
     {
-      "path": "server",
+      "path": "TowerCheckpoint",
       "name": "server"
     }
   ],
